@@ -12,7 +12,11 @@ pipeline {
         // PYTHON_HOME = '/path/to/python'
     //     // PATH = "${env.PYTHON_HOME}/bin:${env.PATH}"
     // }
-
+    environment {
+           FLUTTER_HOME = 'C:/flutter'
+           PATH = "${env.FLUTTER_HOME}\\bin;${env.PATH}"
+    }
+    
     stages {
         stage('Checkout') {
             steps {
