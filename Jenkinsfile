@@ -12,6 +12,12 @@ pipeline {
         // PYTHON_HOME = '/path/to/python'
     //     // PATH = "${env.PYTHON_HOME}/bin:${env.PATH}"
     // }
+
+    tools {
+           androidSdk 'android-sdk' // Name you gave in "Global Tool Configuration"
+        // jdk 'jdk-17'           // Example for JDK if needed
+    }
+    
     environment {
            FLUTTER_HOME = 'C:/flutter'
            PATH = "${env.FLUTTER_HOME}/bin;${env.PATH}"
