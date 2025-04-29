@@ -12,15 +12,12 @@ pipeline {
         // PYTHON_HOME = '/path/to/python'
     //     // PATH = "${env.PYTHON_HOME}/bin:${env.PATH}"
     // }
-    
     environment {
-           FLUTTER_HOME = 'C:/flutter'
-           PATH = "${env.FLUTTER_HOME}/bin;${env.PATH}"
-           ANDROID_SDK_ROOT = 'C:/Users/BHAVANA/AppData/Local/Android/Sdk'
-           PATH = "${env.FLUTTER_HOME}/bin;${env.ANDROID_SDK_ROOT}/platform-tools;${env.ANDROID_SDK_ROOT}/cmdline-tools/latest/bin;${env.PATH}"
-
-
+            FLUTTER_HOME = 'C:/flutter'
+            ANDROID_SDK_ROOT = 'C:/Users/BHAVANA/AppData/Local/Android/Sdk'
+            PATH = "C:/flutter/bin;C:/Users/BHAVANA/AppData/Local/Android/Sdk/platform-tools;C:/Users/BHAVANA/AppData/Local/Android/Sdk/cmdline-tools/latest/bin;${env.PATH}"
     }
+
     
     stages {
         stage('Checkout') {
