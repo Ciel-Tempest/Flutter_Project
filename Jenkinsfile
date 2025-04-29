@@ -1,12 +1,9 @@
-// Jenkinsfile (Declarative Pipeline)
-
 pipeline {
-    agent any // Or specify an agent label with Flutter/Python prerequisites: agent { label 'flutter-agent' }
+    agent any
 
     environment {
         FLUTTER_HOME = 'C:/flutter'
         ANDROID_SDK_ROOT = 'C:/Users/BHAVANA/AppData/Local/Android/Sdk'
-        // Do NOT define PATH here to avoid parsing errors
     }
 
     stages {
@@ -21,10 +18,11 @@ pipeline {
             when {
                 expression { !isUnix() }
             }
+            environment {
+                PATH = "C:/flutter/bin;C:/Users/BHAVANA/AppData/Local/Android/Sdk/platform-tools;C:/Users/BHAVANA/AppData/Local/Android/Sdk/cmdline-tools/latest/bin;${env.PATH}"
+            }
             steps {
-                script {
-                    env.PATH = "C:/flutter/bin;C:/Users/BHAVANA/AppData/Local/Android/Sdk/platform-tools;C:/Users/BHAVANA/AppData/Local/Android/Sdk/cmdline-tools/latest/bin;" + env.PATH
-                }
+                echo 'Updated PATH for Windows'
             }
         }
 
@@ -97,8 +95,6 @@ pipeline {
                 }
             }
         }
-
-        // Add more stages for deployment or post-build steps as needed
     }
 
     post {
