@@ -1,45 +1,75 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
+# Flutter/Dart specific
+.dart_tool/
+.packages
+.pub-cache/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.melos_tool/
+.melos_workspace/
 
-# IntelliJ related
+# Environment & IDE config
+.env
+.env.*
 *.iml
 *.ipr
 *.iws
 .idea/
+.vscode/
+*.swp
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# OS-specific
+.DS_Store
+Thumbs.db
 
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
+# Android
+android/.gradle/
+android/captures/
+android/local.properties
+android/.idea/
+android/.settings/
+android/build/
 
-# Symbolication related
-app.*.symbols
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/.generated/
+ios/build/
 
-# Obfuscation related
-app.*.map.json
+# macOS
+macos/Pods/
+macos/.symlinks/
+macos/Flutter/Flutter.framework
+macos/Flutter/Flutter.podspec
+macos/.generated/
+macos/build/
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# Linux
+linux/flutter/ephemeral/
+linux/build/
+
+# Windows
+windows/flutter/ephemeral/
+windows/build/
+
+# Web
+web/.dart_tool/
+web/build/
+
+# Tests/coverage
+coverage/
+test-results/
+
+# Firebase (optional)
+firebase-debug.log
+
+# IntelliJ/Android Studio
+*.log
+*.tmp
+*.orig
+
+# Pre-commit generated cache
+.pre-commit-config.yaml~
+.pre-commit-cache/
