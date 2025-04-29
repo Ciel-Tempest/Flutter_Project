@@ -12,13 +12,15 @@ String _$graphDisplayHash() => r'181750c74e35f385c39442495fbb2840bfd05092';
 @ProviderFor(GraphDisplay)
 final graphDisplayProvider =
     AutoDisposeAsyncNotifierProvider<GraphDisplay, GraphDisplayState>.internal(
-  GraphDisplay.new,
-  name: r'graphDisplayProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$graphDisplayHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      GraphDisplay.new,
+      name: r'graphDisplayProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$graphDisplayHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$GraphDisplay = AutoDisposeAsyncNotifier<GraphDisplayState>;
 // ignore_for_file: type=lint

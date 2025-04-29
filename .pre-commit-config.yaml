@@ -1,0 +1,49 @@
+# .pre-commit-config.yaml
+
+repos:
+  # Standard file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0 # Use the latest stable tag
+    hooks:
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  # Secret detection
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0 # Use the latest stable tag
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        # Optionally exclude files if needed
+        # exclude: path/to/exclude
+
+  # Flutter specific hooks (using system flutter)
+  - repo: local
+    hooks:
+      - id: flutter-format
+        name: Flutter/Dart Format
+        entry: dart format . --set-exit-if-changed
+        language: system
+        types: [dart]
+        pass_filenames: false
+        always_run: true
+
+      - id: flutter-analyze
+        name: Flutter Analyze
+        entry: flutter analyze --no-fatal-infos --no-fatal-warnings
+        language: system
+        types: [dart]
+        pass_filenames: false
+        always_run: true
+
+      # - id: flutter-analyze
+      #   name: Flutter Analyze
+      #   entry: flutter analyze # Exits non-zero if issues are found
+      #   language: system
+      #   types: [dart] # Run only on dart files
+      #   pass_filenames: false # Analyzer works on the project
+      #   always_run: true # Analyze on every commit

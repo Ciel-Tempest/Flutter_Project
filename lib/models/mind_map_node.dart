@@ -1,5 +1,5 @@
 // lib/models/mind_map_node.dart
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 
 class MindMapNode {
   final int id; // Unique ID for the graph library
@@ -19,7 +19,9 @@ class MindMapNode {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MindMapNode && runtimeType == other.runtimeType && id == other.id;
+      other is MindMapNode &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
 
   @override
   int get hashCode => id.hashCode;

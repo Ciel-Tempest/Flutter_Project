@@ -12,7 +12,6 @@ class CircularLayoutAlgorithm implements Algorithm {
   final Graph fullGraph; // Access to the full graph for parent/sibling info
   late double _width, _height;
 
-
   CircularLayoutAlgorithm({
     required this.fullGraph,
     required this.nodeMap,
@@ -26,7 +25,8 @@ class CircularLayoutAlgorithm implements Algorithm {
   @override
   void setDimensions(double width, double height) {
     _width = width;
-    _height = height;  }
+    _height = height;
+  }
 
   @override
   void setFocusedNode(Node node) {
@@ -51,8 +51,8 @@ class CircularLayoutAlgorithm implements Algorithm {
     }
 
     // Map to store calculated positions to avoid recalculating for shared ancestors
-    final center = Offset(_width / 2, _height / 2);
-    
+    //final center = Offset(_width / 2, _height / 2);
+
     final Map<int, Offset> calculatedPositions = {};
     // Keep track of min/max coordinates to calculate overall size
     double minX = double.infinity, minY = double.infinity;
@@ -67,7 +67,8 @@ class CircularLayoutAlgorithm implements Algorithm {
     if (level1Nodes.isEmpty) return const Size(0, 0);
 
     // --- Position Level 1 Nodes ---
-    final double level1Radius = layerDistance;// Or layerDistance / 2? Place them around center
+    final double level1Radius =
+        layerDistance; // Or layerDistance / 2? Place them around center
     final double angleStep1 = (2 * pi) / max(1, level1Nodes.length);
 
     for (int i = 0; i < level1Nodes.length; i++) {

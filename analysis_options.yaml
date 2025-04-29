@@ -1,28 +1,61 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
-#
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
-# invoked from the command line by running `flutter analyze`.
+# analysis_options.yaml
 
-# The following line activates a set of recommended lints for Flutter apps,
-# packages, and plugins designed to encourage good coding practices.
+# This directive pulls in the latest recommended analysis options
+# provided by the Flutter team via the `flutter_lints` package.
+# Make sure you have `flutter_lints` listed in your `dev_dependencies`
+# in `pubspec.yaml` and have run `flutter pub get`.
 include: package:flutter_lints/flutter.yaml
 
-linter:
-  # The lint rules applied to this project can be customized in the
-  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
-  # included above or to enable additional rules. A list of all available lints
-  # and their documentation is published at https://dart.dev/lints.
-  #
-  # Instead of disabling a lint rule for the entire project in the
-  # section below, it can also be suppressed for a single line of code
-  # or a specific dart file by using the `// ignore: name_of_lint` and
-  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
-  # producing the lint.
-  rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+analyzer:
+  # --- Analyzer Settings ---
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+  # Exclude generated files or specific directories from analysis.
+  # Common examples include generated code or platform-specific build artifacts.
+  # Adjust the paths according to your project structure.
+  exclude:
+    - '**/*.g.dart'             # Common pattern for generated files (e.g., build_runner)
+    - '**/*.freezed.dart'      # Common pattern for freezed generated files
+    - 'lib/generated_plugin_registrant.dart' # Standard Flutter web/desktop generated file
+    # - 'path/to/other/excluded/files/**'
+
+  # --- Error Severity ---
+  # You can override the default severity (info, warning, error) for specific diagnostics.
+  # Treating warnings as errors can enforce stricter code quality.
+  errors:
+    # Example: Treat unused variables as errors instead of warnings
+    unused_local_variable: error
+    unused_import: error
+    # Example: Make missing required parameters an error
+    # missing_required_param: error
+    # Example: Downgrade a specific diagnostic if needed (use with caution)
+    # deprecated_member_use_from_same_package: warning
+
+
+linter:
+  # --- Linter Rules ---
+
+  # The `include` directive above already brings in a comprehensive set of rules
+  # from `flutter_lints`. You typically don't need to list many rules here unless
+  # you want to specifically enable rules *not* in the included set, or
+  # disable rules that *are* in the included set.
+
+  rules:
+    # --- Rules to potentially ENABLE (examples - check if already included first) ---
+    # These might enforce stricter styles or patterns. Check the full list at
+    # https://dart.dev/tools/linter-rules#rules
+    #
+    # prefer_final_locals: true        # If not already enabled by flutter_lints
+    # prefer_final_in_for_each: true
+    # prefer_const_constructors: true  # Usually enabled by flutter_lints
+    # require_trailing_commas: true   # Enforces trailing commas for better formatting diffs
+
+    # --- Rules to potentially DISABLE (examples) ---
+    # Disable rules from the included set if they conflict with your team's style
+    # or are too noisy for your project. Use sparingly.
+    #
+    # avoid_print: false             # Allow `print()` calls (often disabled during dev)
+    # public_member_api_docs: false # Disable if you don't require docs on all public members yet
+    # constant_identifier_names: false # Disable if you don't follow STRICT_ALL_CAPS for constants
+
+    # --- Add any additional rules you want to enforce ---
+    # prefer_relative_imports: true

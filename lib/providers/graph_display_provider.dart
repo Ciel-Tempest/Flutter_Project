@@ -41,52 +41,52 @@ class GraphDisplay extends _$GraphDisplay {
   Graph? _fullGraph;
 
   void setActiveNode(int nodeId) {
-     final currentState = state.value;
-     // Only update if the state exists and the active node is actually changing
-     if (currentState != null && currentState.lastTappedNodeId != nodeId) {
-         state = AsyncData(currentState.copyWith(lastTappedNodeId: nodeId));
-         print("Set active node ID: $nodeId");
-     }
+    final currentState = state.value;
+    // Only update if the state exists and the active node is actually changing
+    if (currentState != null && currentState.lastTappedNodeId != nodeId) {
+      state = AsyncData(currentState.copyWith(lastTappedNodeId: nodeId));
+      print("Set active node ID: $nodeId");
+    }
   }
-// (Display all)
-//   @override
-// FutureOr<GraphDisplayState> build() async {
-//   _fullGraph = await ref.watch(fullGraphProvider.future);
+  // (Display all)
+  //   @override
+  // FutureOr<GraphDisplayState> build() async {
+  //   _fullGraph = await ref.watch(fullGraphProvider.future);
 
-//   if (_fullGraph == null || _fullGraph!.nodeCount() == 0) {
-//     print("Warning: Full graph is null or empty.");
-//     return GraphDisplayState(
-//       displayedGraph: Graph(),
-//       expandedNodeIds: {},
-//       lastTappedNodeId: null,
-//     );
-//   }
+  //   if (_fullGraph == null || _fullGraph!.nodeCount() == 0) {
+  //     print("Warning: Full graph is null or empty.");
+  //     return GraphDisplayState(
+  //       displayedGraph: Graph(),
+  //       expandedNodeIds: {},
+  //       lastTappedNodeId: null,
+  //     );
+  //   }
 
-//   final fullGraphCopy = Graph();
+  //   final fullGraphCopy = Graph();
 
-//   // Clone all nodes
-//   for (var node in _fullGraph!.nodes) {
-//     fullGraphCopy.addNode(node);
-//   }
+  //   // Clone all nodes
+  //   for (var node in _fullGraph!.nodes) {
+  //     fullGraphCopy.addNode(node);
+  //   }
 
-//   // Clone all edges
-//   for (var edge in _fullGraph!.edges) {
-//     fullGraphCopy.addEdge(edge.source, edge.destination);
-//   }
+  //   // Clone all edges
+  //   for (var edge in _fullGraph!.edges) {
+  //     fullGraphCopy.addEdge(edge.source, edge.destination);
+  //   }
 
-//   // Collect all node IDs as expanded
-//   final allExpandedIds = _fullGraph!.nodes
-//       .map((n) => (n.key?.value as MindMapNode).id)
-//       .toSet();
+  //   // Collect all node IDs as expanded
+  //   final allExpandedIds = _fullGraph!.nodes
+  //       .map((n) => (n.key?.value as MindMapNode).id)
+  //       .toSet();
 
-//   print("Full graph pre-expanded: ${_fullGraph!.nodeCount()} nodes, ${_fullGraph!.edges.length} edges");
+  //   print("Full graph pre-expanded: ${_fullGraph!.nodeCount()} nodes, ${_fullGraph!.edges.length} edges");
 
-//   return GraphDisplayState(
-//     displayedGraph: fullGraphCopy,
-//     expandedNodeIds: allExpandedIds,
-//     lastTappedNodeId: null,
-//   );
-// }
+  //   return GraphDisplayState(
+  //     displayedGraph: fullGraphCopy,
+  //     expandedNodeIds: allExpandedIds,
+  //     lastTappedNodeId: null,
+  //   );
+  // }
 
   @override
   FutureOr<GraphDisplayState> build() async {
@@ -107,19 +107,22 @@ class GraphDisplay extends _$GraphDisplay {
 
     if (_fullGraph != null && _fullGraph!.nodeCount() > 0) {
       // Find actual Level 1 nodes from the full graph
-      final level1Nodes = _fullGraph!.nodes.where((node) {
-        final nodeData = node.key?.value as MindMapNode?;
-        return nodeData?.level == 1;
-      }).toList();
+      final level1Nodes =
+          _fullGraph!.nodes.where((node) {
+            final nodeData = node.key?.value as MindMapNode?;
+            return nodeData?.level == 1;
+          }).toList();
 
       // Add Level 1 nodes and edges from "Begin" to them
       for (var level1Node in level1Nodes) {
         initialGraph.addNode(level1Node); // Add to displayed graph
         initialGraph.addEdge(beginGraphNode, level1Node); // Connect to Begin
       }
-       print("Initial display graph created with Begin node and ${level1Nodes.length} Level 1 children.");
+      print(
+        "Initial display graph created with Begin node and ${level1Nodes.length} Level 1 children.",
+      );
     } else {
-       print("Warning: Full graph is null or empty. Only Begin node added.");
+      print("Warning: Full graph is null or empty. Only Begin node added.");
     }
 
     return GraphDisplayState(
@@ -138,9 +141,10 @@ class GraphDisplay extends _$GraphDisplay {
       print("Cannot toggle the 'Begin' node.");
       // Optionally update lastTappedNodeId even if not toggling
       final currentState = state.value;
-       if (currentState != null && currentState.lastTappedNodeId != beginNodeId) {
-           state = AsyncData(currentState.copyWith(lastTappedNodeId: beginNodeId));
-       }
+      if (currentState != null &&
+          currentState.lastTappedNodeId != beginNodeId) {
+        state = AsyncData(currentState.copyWith(lastTappedNodeId: beginNodeId));
+      }
       return;
     }
     // --- End Prevent Toggle ---
@@ -153,7 +157,9 @@ class GraphDisplay extends _$GraphDisplay {
     final currentExpandedIds = HashSet<int>.from(currentState.expandedNodeIds);
     bool isCurrentlyExpanded = currentExpandedIds.contains(nodeData.id);
 
-    print("Toggling node: ${nodeData.label} (ID: ${nodeData.id}), Currently Expanded: $isCurrentlyExpanded");
+    print(
+      "Toggling node: ${nodeData.label} (ID: ${nodeData.id}), Currently Expanded: $isCurrentlyExpanded",
+    );
 
     if (isCurrentlyExpanded) {
       // --- Collapse Node ---
@@ -179,27 +185,42 @@ class GraphDisplay extends _$GraphDisplay {
 
       // --- Corrected Print Statement ---
       print("Collapsing: Removing ${nodesToRemove.length} nodes.");
-      nodesToRemove.forEach(currentGraph.removeNode); // Edges removed automatically
+      nodesToRemove.forEach(
+        currentGraph.removeNode,
+      ); // Edges removed automatically
       currentExpandedIds.remove(nodeData.id);
-
     } else {
       // --- Expand Node ---
       final childrenInFullGraph = _fullGraph!.successorsOf(nodeToToggle);
-      print("Expanding: Found ${childrenInFullGraph.length} children in full graph.");
+      print(
+        "Expanding: Found ${childrenInFullGraph.length} children in full graph.",
+      );
       for (var childNode in childrenInFullGraph) {
         // Add child node if not already present
-        if (currentGraph.nodes.every((n) => n.key?.value != childNode.key?.value)) {
-           print("Adding child node: ${(childNode.key?.value as MindMapNode).label}");
-           currentGraph.addNode(childNode);
+        if (currentGraph.nodes.every(
+          (n) => n.key?.value != childNode.key?.value,
+        )) {
+          print(
+            "Adding child node: ${(childNode.key?.value as MindMapNode).label}",
+          );
+          currentGraph.addNode(childNode);
         } else {
-           print("Child node already exists: ${(childNode.key?.value as MindMapNode).label}");
+          print(
+            "Child node already exists: ${(childNode.key?.value as MindMapNode).label}",
+          );
         }
         // Add edge if not already present
-        if (currentGraph.edges.every((e) => !(e.source == nodeToToggle && e.destination == childNode))) {
-           print("Adding edge: ${nodeData.label} -> ${(childNode.key?.value as MindMapNode).label}");
-           currentGraph.addEdge(nodeToToggle, childNode);
+        if (currentGraph.edges.every(
+          (e) => !(e.source == nodeToToggle && e.destination == childNode),
+        )) {
+          print(
+            "Adding edge: ${nodeData.label} -> ${(childNode.key?.value as MindMapNode).label}",
+          );
+          currentGraph.addEdge(nodeToToggle, childNode);
         } else {
-           print("Edge already exists: ${nodeData.label} -> ${(childNode.key?.value as MindMapNode).label}");
+          print(
+            "Edge already exists: ${nodeData.label} -> ${(childNode.key?.value as MindMapNode).label}",
+          );
         }
       }
       currentExpandedIds.add(nodeData.id);
@@ -212,6 +233,8 @@ class GraphDisplay extends _$GraphDisplay {
         lastTappedNodeId: nodeData.id, // Update active node ID
       ),
     );
-    print("State updated. Active Node ID: ${state.value?.lastTappedNodeId}, Displayed nodes: ${state.value?.displayedGraph.nodeCount}, Expanded IDs: ${state.value?.expandedNodeIds.length}");
+    print(
+      "State updated. Active Node ID: ${state.value?.lastTappedNodeId}, Displayed nodes: ${state.value?.displayedGraph.nodeCount}, Expanded IDs: ${state.value?.expandedNodeIds.length}",
+    );
   }
 }
