@@ -14,7 +14,9 @@ pipeline {
     // }
     environment {
            FLUTTER_HOME = 'C:/flutter'
-           PATH = "${env.FLUTTER_HOME}\\bin;${env.PATH}"
+           PATH = "${env.FLUTTER_HOME}/bin;${env.PATH}"
+
+
     }
     
     stages {
