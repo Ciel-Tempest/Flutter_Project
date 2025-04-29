@@ -3,15 +3,15 @@
 pipeline {
     agent any // Or specify an agent label with Flutter/Python prerequisites: agent { label 'flutter-agent' }
 
-    environment {
+    // environment {
         // Define Flutter SDK path if it's not in the system PATH (Adjust path as needed)
         // FLUTTER_HOME = '/path/to/flutter/sdk'
         // PATH = "${env.FLUTTER_HOME}/bin:${env.PATH}"
 
         // Define Python path if needed (less common)
         // PYTHON_HOME = '/path/to/python'
-        // PATH = "${env.PYTHON_HOME}/bin:${env.PATH}"
-    }
+    //     // PATH = "${env.PYTHON_HOME}/bin:${env.PATH}"
+    // }
 
     stages {
         stage('Checkout') {
