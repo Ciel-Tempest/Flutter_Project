@@ -4,6 +4,7 @@ pipeline {
     environment {
         FLUTTER_HOME = 'C:/flutter'
         ANDROID_SDK_ROOT = 'C:/Users/BHAVANA/AppData/Local/Android/Sdk'
+        PYTHON_SCRIPTS = 'C:/Users/BHAVANA/Scripts'
     }
 
     stages {
@@ -14,12 +15,29 @@ pipeline {
             }
         }
 
+        stage('Debug Python Path') {
+            when {
+                expression { !isUnix() }
+            }
+            steps {
+                script {
+                    bat 'echo Checking Python location...'
+                    bat 'where python'
+                    bat 'where pip'
+                }
+            }
+        }
+
         stage('Set PATH for Windows') {
             when {
                 expression { !isUnix() }
             }
             environment {
-                PATH = "C:/flutter/bin;C:/Users/BHAVANA/AppData/Local/Android/Sdk/platform-tools;C:/Users/BHAVANA/AppData/Local/Android/Sdk/cmdline-tools/latest/bin;${env.PATH}"
+                PATH = "C:/flutter/bin;" +
+                       "C:/Users/BHAVANA/AppData/Local/Android/Sdk/platform-tools;" +
+                       "C:/Users/BHAVANA/AppData/Local/Android/Sdk/cmdline-tools/latest/bin;" +
+                       "C:/Users/BHAVANA/Scripts;" +  // <- Add Scripts path to ensure pip/pre-commit work
+                       "${env.PATH}"
             }
             steps {
                 echo 'Updated PATH for Windows'
@@ -30,15 +48,13 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'echo "Verifying prerequisites..."'
                         sh 'flutter --version'
-                        sh 'python --version || python3 --version'
-                        sh 'pip --version || python -m pip --version || python3 -m pip --version'
+                        sh 'python3 --version'
+                        sh 'pip3 --version'
                     } else {
-                        bat 'echo "Verifying prerequisites..."'
                         bat 'flutter --version'
                         bat 'python --version'
-                        bat 'python -m pip --version'
+                        bat 'pip --version'
                     }
                 }
             }
@@ -49,7 +65,7 @@ pipeline {
                 echo 'Installing pre-commit and detect-secrets...'
                 script {
                     if (isUnix()) {
-                        sh 'python -m pip install --user pre-commit detect-secrets || python3 -m pip install --user pre-commit detect-secrets'
+                        sh 'python3 -m pip install --user pre-commit detect-secrets'
                     } else {
                         bat 'python -m pip install --user pre-commit detect-secrets'
                     }
@@ -65,7 +81,7 @@ pipeline {
                         sh 'pre-commit run --all-files'
                     } else {
                         bat '''
-                        set PATH=%USERPROFILE%\\AppData\\Roaming\\Python\\Python312\\Scripts;%PATH%
+                        set PATH=%PYTHON_SCRIPTS%;%PATH%
                         pre-commit run --all-files
                         '''
                     }
