@@ -38,7 +38,7 @@ pipeline {
                         bat 'echo "Verifying prerequisites..."'
                         bat 'flutter --version'
                         bat 'python --version'
-                        bat 'pip --version'
+                        bat 'python -m pip --version'
                     }
                 }
             }
@@ -64,7 +64,10 @@ pipeline {
                     if (isUnix()) {
                         sh 'pre-commit run --all-files'
                     } else {
-                        bat 'pre-commit run --all-files'
+                        bat '''
+                        set PATH=%USERPROFILE%\\AppData\\Roaming\\Python\\Python312\\Scripts;%PATH%
+                        pre-commit run --all-files
+                        '''
                     }
                 }
             }
