@@ -75,19 +75,17 @@ pipeline {
 
         stage('Run Pre-commit Hooks') {
             steps {
-                echo 'Running pre-commit checks...'
-                script {
-                    if (isUnix()) {
-                        sh 'pre-commit run --all-files'
-                    } else {
-                        bat '''
-                        set PATH=%PYTHON_SCRIPTS%;%PATH%
-                        pre-commit run --all-files
-                        '''
-                    }
-                }
-            }
+                bat '''
+                   echo Adding Python scripts to PATH...
+                   set "OLD_PATH=%PATH%"
+                   set "PY_SCRIPT_PATH=C:\\Users\\BHAVANA\\AppData\\Roaming\\Python\\Python313\\Scripts"
+                   set "PATH=%PY_SCRIPT_PATH%;%OLD_PATH%"
+                   where pre-commit
+                   pre-commit run --all-files
+               '''
+             }
         }
+
 
         stage('Build Flutter App') {
             steps {
