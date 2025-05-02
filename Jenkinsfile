@@ -99,18 +99,19 @@ pipeline {
             }
         }
 
-        stage('Build Flutter App') {
-            steps {
-                echo 'Building Flutter application...'
-                script {
-                    if (isUnix()) {
-                        sh 'flutter build apk --release --no-daemon'
-                    } else {
-                        bat 'flutter build apk --release --no-daemon'
-                    }
-                }
-            }
-        }
+       stage('Build Flutter App') {
+           steps {
+               echo 'Building Flutter application...'
+               script {
+                   if (isUnix()) {
+                       sh 'flutter build apk --release'
+                   } else {
+                       bat 'flutter build apk --release'
+                   }
+               }
+           }
+       }
+
 
         stage('Test') {
             steps {
