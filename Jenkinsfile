@@ -86,18 +86,18 @@ pipeline {
             }
         }
 
-        stage('Clean Gradle Folder') {
-            steps {
-                echo 'Deleting .gradle folder...'
-                script {
-                    if (isUnix()) {
-                        sh 'rm -rf $HOME/.gradle'
-                    } else {
-                        bat 'rmdir /s /q C:\\Users\\BHAVANA\\.gradle'
-                    }
-                }
-            }
-        }
+        // stage('Clean Gradle Folder') {
+        //     steps {
+        //         echo 'Deleting .gradle folder...'
+        //         script {
+        //             if (isUnix()) {
+        //                 sh 'rm -rf $HOME/.gradle'
+        //             } else {
+        //                 bat 'rmdir /s /q C:\\Users\\BHAVANA\\.gradle'
+        //             }
+        //         }
+        //     }
+        // }
 
        stage('Build Flutter App') {
            steps {
