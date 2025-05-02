@@ -36,7 +36,7 @@ pipeline {
                 PATH = "C:/flutter/bin;" +
                        "C:/Users/BHAVANA/AppData/Local/Android/Sdk/platform-tools;" +
                        "C:/Users/BHAVANA/AppData/Local/Android/Sdk/cmdline-tools/latest/bin;" +
-                       "C:/Users/BHAVANA/Scripts;" +  // <- Add Scripts path to ensure pip/pre-commit work
+                       "C:/Users/BHAVANA/Scripts;" +
                        "${env.PATH}"
             }
             steps {
@@ -83,18 +83,30 @@ pipeline {
                    where pre-commit
                    pre-commit run --all-files
                '''
-             }
+            }
         }
 
+        stage('Clean Gradle Folder') {
+            steps {
+                echo 'Deleting .gradle folder...'
+                script {
+                    if (isUnix()) {
+                        sh 'rm -rf $HOME/.gradle'
+                    } else {
+                        bat 'rmdir /s /q C:\\Users\\BHAVANA\\.gradle'
+                    }
+                }
+            }
+        }
 
         stage('Build Flutter App') {
             steps {
                 echo 'Building Flutter application...'
                 script {
                     if (isUnix()) {
-                        sh 'flutter build apk --release'
+                        sh 'flutter build apk --release --no-daemon'
                     } else {
-                        bat 'flutter build apk --release'
+                        bat 'flutter build apk --release --no-daemon'
                     }
                 }
             }
