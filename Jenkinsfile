@@ -82,6 +82,18 @@ pipeline {
         //         }
         //     }
         // }
+        stage('Analyze Flutter Project') {
+            steps {
+                script {
+                    try {
+                         bat 'pre-commit run flutter-analyze --all-files'
+                     } catch (Exception e) {
+                    echo "Flutter Analyze failed with warnings: ${e.message}"
+                // Continue despite failures
+                    }
+                }
+            }
+        }
 
         stage('Build Flutter App') {
             steps {
