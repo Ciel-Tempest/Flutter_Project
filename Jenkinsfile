@@ -85,12 +85,10 @@ pipeline {
         stage('Analyze Flutter Project') {
             steps {
                 script {
-                    try {
-                         bat 'pre-commit run flutter-analyze --all-files'
-                     } catch (Exception e) {
-                    echo "Flutter Analyze failed with warnings: ${e.message}"
-                // Continue despite failures
-                    }
+                    // Run flutter analyze through pre-commit hook
+                    bat '''
+                        pre-commit run flutter-analyze --all-files || echo "Flutter Analyze warnings are ignored"
+                    '''
                 }
             }
         }
