@@ -3,8 +3,13 @@ pipeline {
 
     environment {
         FLUTTER_HOME = 'C:/flutter'
-        ANDROID_SDK_ROOT = 'E:\\Sdk'
-        PYTHON_SCRIPTS = 'C:/Users/BHAVANA/Scripts'
+        ANDROID_SDK_ROOT = 'E:/Sdk'
+        PYTHON_SCRIPTS = 'C:/Users/BHAVANA/AppData/Roaming/Python/Python313/Scripts'
+        PATH = "${FLUTTER_HOME}/bin;" +
+               "${ANDROID_SDK_ROOT}/platform-tools;" +
+               "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin;" +
+               "${PYTHON_SCRIPTS};" +
+               "${env.PATH}"
     }
 
     stages {
@@ -25,22 +30,6 @@ pipeline {
                     bat 'where python'
                     bat 'where pip'
                 }
-            }
-        }
-
-        stage('Set PATH for Windows') {
-            when {
-                expression { !isUnix() }
-            }
-            environment {
-                PATH = "C:/flutter/bin;" +
-                       "C:/Users/BHAVANA/AppData/Local/Android/Sdk/platform-tools;" +
-                       "C:/Users/BHAVANA/AppData/Local/Android/Sdk/cmdline-tools/latest/bin;" +
-                       "C:/Users/BHAVANA/Scripts;" +
-                       "${env.PATH}"
-            }
-            steps {
-                echo 'Updated PATH for Windows'
             }
         }
 
@@ -76,42 +65,36 @@ pipeline {
         stage('Run Pre-commit Hooks') {
             steps {
                 bat '''
-                   echo Adding Python scripts to PATH...
-                   set "OLD_PATH=%PATH%"
-                   set "PY_SCRIPT_PATH=C:\\Users\\BHAVANA\\AppData\\Roaming\\Python\\Python313\\Scripts"
-                   set "PATH=%PY_SCRIPT_PATH%;%OLD_PATH%"
                    where pre-commit
                    pre-commit run --all-files
                '''
             }
         }
 
-        // stage('Clean Gradle Folder') {
-        //     steps {
-        //         echo 'Deleting .gradle folder...'
-        //         script {
-        //             if (isUnix()) {
-        //                 sh 'rm -rf $HOME/.gradle'
-        //             } else {
-        //                 bat 'rmdir /s /q C:\\Users\\BHAVANA\\.gradle'
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Accept Android Licenses') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'flutter doctor --android-licenses'
+                    } else {
+                        bat 'flutter doctor --android-licenses'
+                    }
+                }
+            }
+        }
 
-       stage('Build Flutter App') {
-           steps {
-               echo 'Building Flutter application...'
-               script {
-                   if (isUnix()) {
-                       sh 'flutter build apk --release'
-                   } else {
-                       bat 'flutter build apk --release'
-                   }
-               }
-           }
-       }
-
+        stage('Build Flutter App') {
+            steps {
+                echo 'Building Flutter application...'
+                script {
+                    if (isUnix()) {
+                        sh 'flutter build apk --release'
+                    } else {
+                        bat 'flutter build apk --release'
+                    }
+                }
+            }
+        }
 
         stage('Test') {
             steps {
