@@ -1,5 +1,6 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // Necessary for Riverpod
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/mind_map_screen.dart';
 
 void main() {
@@ -19,7 +20,12 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.dark, // Use dark mode
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 65, 34, 1), // Deep dark blue/purple
+        scaffoldBackgroundColor: const Color.fromARGB(
+          255,
+          65,
+          34,
+          1,
+        ), // Deep dark blue/purple
         colorScheme: const ColorScheme.dark(
           primary: Color(0xFFE0AFFF), // Light purple/pink
           secondary: Color(0xFF00F5D4), // Bright cyan/teal
@@ -43,4 +49,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
