@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         FLUTTER_HOME = 'C:/flutter'
-        ANDROID_SDK_ROOT = 'C:/Users/BHAVANA/AppData/Local/Android/Sdk'
+        ANDROID_SDK_ROOT = 'E:\\Sdk'
         PYTHON_SCRIPTS = 'C:/Users/BHAVANA/Scripts'
     }
 
