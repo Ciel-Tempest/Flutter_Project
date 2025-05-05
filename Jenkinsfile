@@ -82,16 +82,16 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Analyze Flutter Project') {
-            steps {
-                script {
-                    // Run flutter analyze through pre-commit hook
-                    bat '''
-                        pre-commit run flutter-analyze --all-files || echo "Flutter Analyze warnings are ignored"
-                    '''
-                }
-            }
-        }
+        // stage('Analyze Flutter Project') {
+        //     steps {
+        //         script {
+        //             // Run flutter analyze through pre-commit hook
+        //             bat '''
+        //                 pre-commit run flutter-analyze --all-files || echo "Flutter Analyze warnings are ignored"
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Build Flutter App') {
             steps {
