@@ -71,17 +71,17 @@ pipeline {
             }
         }
 
-        stage('Accept Android Licenses') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh 'flutter doctor --android-licenses'
-                    } else {
-                        bat 'flutter doctor --android-licenses'
-                    }
-                }
-            }
-        }
+        // stage('Accept Android Licenses') {
+        //     steps {
+        //         script {
+        //             if (isUnix()) {
+        //                 sh 'flutter doctor --android-licenses'
+        //             } else {
+        //                 bat 'flutter doctor --android-licenses'
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Build Flutter App') {
             steps {
