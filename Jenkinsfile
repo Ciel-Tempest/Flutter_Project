@@ -4,7 +4,7 @@ pipeline {
     environment {
         FLUTTER_HOME = 'C:/flutter'
         ANDROID_SDK_ROOT = 'E:/Sdk'
-        PYTHON_SCRIPTS = 'C:/Users/BHAVANA/AppData/Roaming/Python/Python313/Scripts'
+        PYTHON_SCRIPTS = 'C:/Users/BHAVANA/AppData/Local/Programs/Python/Python313/Scripts'
         PATH = "${FLUTTER_HOME}/bin;" +
                "${ANDROID_SDK_ROOT}/platform-tools;" +
                "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin;" +
