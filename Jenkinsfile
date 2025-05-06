@@ -4,10 +4,12 @@ pipeline {
     environment {
         FLUTTER_HOME = 'C:/flutter'
         ANDROID_SDK_ROOT = 'E:/Sdk'
-        PYTHON_SCRIPTS = 'C:/Users/BHAVANA/AppData/Local/Programs/Python/Python313/Scripts'
+        PYTHON_HOME = 'C:/Users/BHAVANA/AppData/Local/Programs/Python/Python313'
+        PYTHON_SCRIPTS = "${PYTHON_HOME}/Scripts"
         PATH = "${FLUTTER_HOME}/bin;" +
                "${ANDROID_SDK_ROOT}/platform-tools;" +
                "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin;" +
+               "${PYTHON_HOME};" +
                "${PYTHON_SCRIPTS};" +
                "${env.PATH}"
     }
@@ -70,28 +72,6 @@ pipeline {
                '''
             }
         }
-
-        // stage('Accept Android Licenses') {
-        //     steps {
-        //         script {
-        //             if (isUnix()) {
-        //                 sh 'flutter doctor --android-licenses'
-        //             } else {
-        //                 bat 'flutter doctor --android-licenses'
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Analyze Flutter Project') {
-        //     steps {
-        //         script {
-        //             // Run flutter analyze through pre-commit hook
-        //             bat '''
-        //                 pre-commit run flutter-analyze --all-files || echo "Flutter Analyze warnings are ignored"
-        //             '''
-        //         }
-        //     }
-        // }
 
         stage('Build Flutter App') {
             steps {
